@@ -8,6 +8,8 @@ import com.tcc.demo.demo.services.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 @Component
 @DS("account")
 public class AccountService implements Service {
@@ -21,7 +23,7 @@ public class AccountService implements Service {
 
     @Override
     @TccAction(name = "prepare", confirmMethod = "commit", cancelMethod = "cancel")
-    public boolean prepare(boolean success) {
+    public boolean prepare(Map<String,Integer> request) {
         return false;
     }
 

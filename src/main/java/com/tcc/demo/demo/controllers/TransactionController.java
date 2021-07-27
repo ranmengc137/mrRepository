@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+
 /**
  * @author lw
  */
@@ -19,17 +21,7 @@ public class TransactionController {
     @GetMapping(value = "/commit")
     public String commit() {
         try {
-            service.buySuccess(1);
-            return "commit success";
-        } catch (RuntimeException e) {
-            return "commit failed";
-        }
-    }
-
-    @GetMapping(value = "/cancel")
-    public String cancel() {
-        try {
-            service.buyFailed();
+            service.buySuccess(new HashMap<>());
             return "commit success";
         } catch (RuntimeException e) {
             return "commit failed";
