@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tcc.demo.demo.mappers.InventoryMapper">
+  <resultMap id="BaseResultMap" type="com.tcc.demo.demo.entities.Inventory">
+    <!--@mbg.generated -->
+    <!--@Table inventory -->
+    <!-- generated on Tue Jul 27 15:33:48 CST 2021 -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="prod_name" jdbcType="VARCHAR" property="prodName" />
+    <result column="inventory_left" jdbcType="INTEGER" property="inventoryLeft" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated -->
+    id, prod_name, inventory_left, updateTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated -->
+    select 
+    <include refid="Base_Column_List" />
+    from inventory
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated -->
+    delete from inventory
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.tcc.demo.demo.entities.Inventory">
+    <!--@mbg.generated -->
+    insert into inventory (id, prod_name, inventory_left, 
+      updateTime)
+    values (#{id,jdbcType=BIGINT}, #{prodName,jdbcType=VARCHAR}, #{inventoryLeft,jdbcType=INTEGER}, 
+      #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tcc.demo.demo.entities.Inventory">
+    <!--@mbg.generated -->
+    insert into inventory
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="prodName != null">
+        prod_name,
+      </if>
+      <if test="inventoryLeft != null">
+        inventory_left,
+      </if>
+      <if test="updatetime != null">
+        updateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="prodName != null">
+        #{prodName,jdbcType=VARCHAR},
+      </if>
+      <if test="inventoryLeft != null">
+        #{inventoryLeft,jdbcType=INTEGER},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tcc.demo.demo.entities.Inventory">
+    <!--@mbg.generated -->
+    update inventory
+    <set>
+      <if test="prodName != null">
+        prod_name = #{prodName,jdbcType=VARCHAR},
+      </if>
+      <if test="inventoryLeft != null">
+        inventory_left = #{inventoryLeft,jdbcType=INTEGER},
+      </if>
+      <if test="updatetime != null">
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tcc.demo.demo.entities.Inventory">
+    <!--@mbg.generated -->
+    update inventory
+    set prod_name = #{prodName,jdbcType=VARCHAR},
+      inventory_left = #{inventoryLeft,jdbcType=INTEGER},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

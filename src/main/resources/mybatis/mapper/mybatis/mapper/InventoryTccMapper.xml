@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tcc.demo.demo.mappers.InventoryTccMapper">
+  <resultMap id="BaseResultMap" type="com.tcc.demo.demo.entities.InventoryTcc">
+    <!--@mbg.generated -->
+    <!--@Table inventory_tcc -->
+    <!-- generated on Tue Jul 27 15:33:58 CST 2021 -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="prod_name" jdbcType="VARCHAR" property="prodName" />
+    <result column="inventory_free" jdbcType="INTEGER" property="inventoryFree" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="trx_id" jdbcType="VARCHAR" property="trxId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated -->
+    id, prod_name, inventory_free, updateTime, `status`, trx_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated -->
+    select 
+    <include refid="Base_Column_List" />
+    from inventory_tcc
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated -->
+    delete from inventory_tcc
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.tcc.demo.demo.entities.InventoryTcc">
+    <!--@mbg.generated -->
+    insert into inventory_tcc (id, prod_name, inventory_free, 
+      updateTime, `status`, trx_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{prodName,jdbcType=VARCHAR}, #{inventoryFree,jdbcType=INTEGER}, 
+      #{updatetime,jdbcType=TIMESTAMP}, #{status,jdbcType=CHAR}, #{trxId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tcc.demo.demo.entities.InventoryTcc">
+    <!--@mbg.generated -->
+    insert into inventory_tcc
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="prodName != null">
+        prod_name,
+      </if>
+      <if test="inventoryFree != null">
+        inventory_free,
+      </if>
+      <if test="updatetime != null">
+        updateTime,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="trxId != null">
+        trx_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="prodName != null">
+        #{prodName,jdbcType=VARCHAR},
+      </if>
+      <if test="inventoryFree != null">
+        #{inventoryFree,jdbcType=INTEGER},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="trxId != null">
+        #{trxId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tcc.demo.demo.entities.InventoryTcc">
+    <!--@mbg.generated -->
+    update inventory_tcc
+    <set>
+      <if test="prodName != null">
+        prod_name = #{prodName,jdbcType=VARCHAR},
+      </if>
+      <if test="inventoryFree != null">
+        inventory_free = #{inventoryFree,jdbcType=INTEGER},
+      </if>
+      <if test="updatetime != null">
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=CHAR},
+      </if>
+      <if test="trxId != null">
+        trx_id = #{trxId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tcc.demo.demo.entities.InventoryTcc">
+    <!--@mbg.generated -->
+    update inventory_tcc
+    set prod_name = #{prodName,jdbcType=VARCHAR},
+      inventory_free = #{inventoryFree,jdbcType=INTEGER},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=CHAR},
+      trx_id = #{trxId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

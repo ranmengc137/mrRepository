@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tcc.demo.demo.mappers.TransactionInfoMapper" >
+    <resultMap id="BaseResultMap" type="com.tcc.demo.demo.entities.TransactionInfo" >
+        <id column="xid" property="xid" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="BIGINT" />
+        <result column="class_name" property="className" jdbcType="VARCHAR" />
+        <result column="commit_method_name" property="commitMethodName" jdbcType="VARCHAR"/>
+        <result column="cancel_method_name" property="cancelMethodName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        xid, status, class_name, commit_method_name, cancel_method_name
+    </sql>
+    <insert id="insertOne">
+        insert into transaction_info
+            (xid, status, class_name, commit_method_name, cancel_method_name)
+        values
+            (#{xid}, #{status}, #{className}, #{commitMethodName}, #{cancelMethodName})
+    </insert>
+
+    <update id="updateOne">
+        UPDATE transaction_info SET
+        <trim suffixOverrides="," suffix="WHERE xid = #{xid}">
+            <if test="status != null">status = #{status},</if>
+        </trim>
+    </update>
+
+    <select id="query" resultType="java.util.Map">
+        SELECT
+            <include refid="Base_Column_List" />
+        FROM transaction_info
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="xid != null">
+                xid = #{xid}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </trim>
+    </select>
+
+</mapper>
