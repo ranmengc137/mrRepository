@@ -1,9 +1,11 @@
 package com.tcc.demo.demo.services;
 
+import com.tcc.demo.demo.annotation.DS;
 import com.tcc.demo.demo.constant.TransactionMethod;
 import com.tcc.demo.demo.constant.TransactionStatus;
 import com.tcc.demo.demo.entities.TransactionInfo;
 import com.tcc.demo.demo.mappers.TransactionInfoMapper;
+import com.tcc.demo.demo.utils.SpringBeanFactoryUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ import java.util.Map;
  */
 @Service
 @Slf4j
+@DS("test")
 public class TccClientService {
 
     private final TransactionInfoMapper transactionInfoMapper;
@@ -47,12 +50,11 @@ public class TccClientService {
                 break;
             }
         }
-
         // 执行 confirm 或者 cancel
         if (executeConfirm) {
-            return executeMethod(branchTransactions, TransactionMethod.CONFIRM);
+            return executeMethod(branchTransactions, TransactionMethod.CONFIRM,xid);
         } else {
-            return executeMethod(branchTransactions, TransactionMethod.CANCEL);
+            return executeMethod(branchTransactions, TransactionMethod.CANCEL,xid);
         }
     }
 
@@ -63,22 +65,22 @@ public class TccClientService {
      * @param methodName confirm 或者 cancel
      * @return bool
      */
-    private boolean executeMethod(List<Map<String, Object>> branchTransactions, String methodName) {
+    private boolean executeMethod(List<Map<String, Object>> branchTransactions, String methodName,String trxId) {
         for (Map<String, Object> item: branchTransactions) {
-            log.info("service info:: " + item.toString());
-            log.info("service method :: " + item.get(methodName).toString());
+            System.out.println("service info:: " + item.toString());
+            System.out.println("service method :: " + item.get(methodName).toString());
 
             try {
                 Class<?> clazz = Class.forName(item.get("class_name").toString());
-                log.info("Service Class::" + clazz.getName());
+                System.out.println("Service Class::" + clazz.getName());
 
-                Method method = clazz.getDeclaredMethod(item.get(methodName).toString());
-                log.info("Service Method::" + method.toString());
+                Method method = clazz.getDeclaredMethod(item.get(methodName).toString(),String.class);
+                System.out.println("Service Method::" + method.toString());
 
-                Object service = clazz.newInstance();
-                Object ret = method.invoke(service);
-                log.info("execute method return: " + ret.toString());
-            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
+                Object service = SpringBeanFactoryUtils.getBean(clazz);
+                Object ret = method.invoke(service,trxId);
+                System.out.println("execute method return: " + ret.toString());
+            } catch (Exception e) {
                 e.printStackTrace();
                 return false;
             }
@@ -94,7 +96,7 @@ public class TccClientService {
      * @param cancelMethodName cancel 方法名
      */
     public void register(String xid, String className, String commitMethodName, String cancelMethodName) {
-        log.info("Register xid::" + xid + " class name:: " + className + " commit method::" + commitMethodName +
+        System.out.println("Register xid::" + xid + " class name:: " + className + " commit method::" + commitMethodName +
                 " cancel method::" + cancelMethodName);
 
         TransactionInfo transactionInfo = new TransactionInfo();
@@ -108,6 +110,6 @@ public class TccClientService {
         Map<String, Object> condition = new HashMap<>(1);
         condition.put("xid", xid);
         List<Map<String, Object>> transactionInfos = transactionInfoMapper.query(condition);
-        log.info("insert to database:: " + transactionInfos.toString());
+        System.out.println("insert to database:: " + transactionInfos.toString());
     }
 }

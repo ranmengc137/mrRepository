@@ -18,7 +18,7 @@ public class DynamicDataSourceContextHolder {
      */
     public static String getContextKey() {
         String key = DATASOURCE_CONTEXT_KEY_HOLDER.get();
-        return key == null ? "account" : key;
+        return key == null ? "test" : key;
     }
 
     /**

@@ -16,6 +16,31 @@
     <!--@mbg.generated -->
     id, account_name, amount_freeze, updateTime, `status`, trx_id
   </sql>
+  <insert id="freezeAmount">
+    insert into account_tcc (account_name, amount_freeze,
+    updateTime, `status`, trx_id
+    )
+    values (#{accountTcc.accountName,jdbcType=VARCHAR}, #{accountTcc.amountFreeze,jdbcType=INTEGER},
+    #{accountTcc.updatetime,jdbcType=TIMESTAMP}, #{accountTcc.status,jdbcType=CHAR}, #{accountTcc.trxId,jdbcType=VARCHAR}
+    )
+  </insert>
+
+  <update id="updateStatusToCommit">
+    update account_tcc set status = '2' where trx_id=#{trxId,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateStatusToCancel">
+    update account_tcc set status = '3' where trx_id=#{trxId,jdbcType=VARCHAR}
+  </update>
+
+  <update id="unFreeze" parameterType="java.lang.String">
+    update account set amount_left=
+    (select sum(t.amount) from
+			(select amount_left amount from account where account_name='zhangsan' union all
+				select amount_freeze amount from account_tcc where trx_id = #{trxId,jdbcType=VARCHAR}) as t),updateTime=sysdate()
+    where account_name='zhangsan'
+  </update>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     <!--@mbg.generated -->
     select 
@@ -113,4 +138,7 @@
       trx_id = #{trxId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+
+
 </mapper>

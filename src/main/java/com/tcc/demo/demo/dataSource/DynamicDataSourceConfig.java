@@ -41,14 +41,14 @@ public class DynamicDataSourceConfig {
     @Bean
     @Primary
     public DataSource dynamicDataSource() {
-        Map<Object, Object> dataSourceMap = new HashMap<>(2);
+        Map<Object, Object> dataSourceMap = new HashMap<>(3);
         dataSourceMap.put("account", accountDataSource());
         dataSourceMap.put("inventory", inventoryDataSource());
         dataSourceMap.put("test", testDataSource());
         //设置动态数据源
         DynamicDataSource dynamicDataSource = new DynamicDataSource();
         dynamicDataSource.setTargetDataSources(dataSourceMap);
-        dynamicDataSource.setDefaultTargetDataSource(accountDataSource());
+        dynamicDataSource.setDefaultTargetDataSource(testDataSource());
         return dynamicDataSource;
     }
 }

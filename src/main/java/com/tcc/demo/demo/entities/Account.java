@@ -11,7 +11,5 @@ public class Account {
 
     private Integer amountLeft;
 
-    private Integer amountFreeze;
-
-    private Date updatetime;
+    private Date updateTime;
 }

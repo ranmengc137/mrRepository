@@ -1,6 +1,8 @@
 package com.tcc.demo.demo.mappers;
 
+import com.tcc.demo.demo.annotation.DS;
 import com.tcc.demo.demo.entities.AccountTcc;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -46,4 +48,12 @@ public interface AccountTccMapper {
     * @return int int
     */
     int updateByPrimaryKey(AccountTcc record);
+
+    int freezeAmount(@Param("accountTcc") AccountTcc record);
+
+    int updateStatusToCommit(@Param("trxId") String trxId);
+
+    int updateStatusToCancel(@Param("trxId") String trxId);
+
+    int unFreeze(@Param("trxId") String trxId);
 }

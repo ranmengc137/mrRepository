@@ -26,7 +26,7 @@ public class DynamicDataSourceAspect {
         try{
             return joinPoint.proceed();
         }finally {
-            DynamicDataSourceContextHolder.removeContextKey();
+            DynamicDataSourceContextHolder.setContextKey("test");
         }
     }
 

@@ -1,5 +1,7 @@
 package com.tcc.demo.demo.services;
 
+import com.tcc.demo.demo.modual.OrderContext;
+
 import java.util.Map;
 
 /**
@@ -12,17 +14,17 @@ public interface Service {
      * @param success try type
      * @return try result
      */
-    boolean prepare(Map<String,Integer> request);
+    boolean prepare(OrderContext context);
 
     /**
      * tcc transaction confirm
      * @return confirm result
      */
-    boolean commit();
+    boolean commit(String trxId);
 
     /**
      * tcc transaction cancel
      * @return confirm result
      */
-    boolean cancel();
+    boolean cancel(String trxId);
 }

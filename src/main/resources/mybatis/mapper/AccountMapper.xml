@@ -8,12 +8,11 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="account_name" jdbcType="VARCHAR" property="accountName" />
     <result column="amount_left" jdbcType="INTEGER" property="amountLeft" />
-    <result column="amount_freeze" jdbcType="INTEGER" property="amountFreeze" />
-    <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated -->
-    id, account_name, amount_left, amount_freeze, updateTime
+    id, account_name, amount_left,  updateTime
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     <!--@mbg.generated -->
@@ -30,7 +29,7 @@
   <insert id="insert" parameterType="com.tcc.demo.demo.entities.Account">
     <!--@mbg.generated -->
     insert into account (id, account_name, amount_left, 
-      amount_freeze, updateTime)
+       updateTime)
     values (#{id,jdbcType=BIGINT}, #{accountName,jdbcType=VARCHAR}, #{amountLeft,jdbcType=INTEGER}, 
       #{amountFreeze,jdbcType=INTEGER}, #{updatetime,jdbcType=TIMESTAMP})
   </insert>
@@ -48,7 +47,7 @@
         amount_left,
       </if>
       <if test="amountFreeze != null">
-        amount_freeze,
+        
       </if>
       <if test="updatetime != null">
         updateTime,
@@ -100,4 +99,12 @@
       updateTime = #{updatetime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <update id="deductAmount" >
+    update account
+    set amount_left = #{amountLeft,jdbcType=INTEGER},
+    updateTime = sysdate()
+    where account_name=#{account_name}
+  </update>
+
 </mapper>

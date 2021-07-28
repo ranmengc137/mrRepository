@@ -1,9 +1,10 @@
 package com.tcc.demo.demo.aspect;
 
 import com.tcc.demo.demo.constant.TransactionStatus;
+import com.tcc.demo.demo.dataSource.DynamicDataSourceContextHolder;
 import com.tcc.demo.demo.entities.TransactionInfo;
 import com.tcc.demo.demo.mappers.TransactionInfoMapper;
-import com.tcc.demo.demo.transaction.RootContext;
+import com.tcc.demo.demo.modual.RootContext;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -61,7 +62,7 @@ public class GlobalTransactionHandler {
             RootContext.remove();
             return null;
         }
-
+        DynamicDataSourceContextHolder.setContextKey("test");
         // try 成功，在数据库中更新所有分支事务的状态
         log.info("global update transaction status to try success");
         updateTransactionStatus(transactionId, TransactionStatus.TRY_SUCCESS);

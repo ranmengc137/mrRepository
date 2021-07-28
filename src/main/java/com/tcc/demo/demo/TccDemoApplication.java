@@ -13,6 +13,7 @@ public class TccDemoApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(TccDemoApplication.class, args);
+        System.out.println("OK");
     }
 
 }

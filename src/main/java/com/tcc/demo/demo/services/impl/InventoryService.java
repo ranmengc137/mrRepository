@@ -3,6 +3,7 @@ package com.tcc.demo.demo.services.impl;
 import com.tcc.demo.demo.annotation.DS;
 import com.tcc.demo.demo.mappers.InventoryMapper;
 import com.tcc.demo.demo.mappers.InventoryTccMapper;
+import com.tcc.demo.demo.modual.OrderContext;
 import com.tcc.demo.demo.services.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,17 +22,17 @@ public class InventoryService implements Service {
 
 
     @Override
-    public boolean prepare(Map<String,Integer> request) {
+    public boolean prepare(OrderContext context) {
         return false;
     }
 
     @Override
-    public boolean commit() {
+    public boolean commit(String trxId) {
         return false;
     }
 
     @Override
-    public boolean cancel() {
+    public boolean cancel(String trxId) {
         return false;
     }
 }

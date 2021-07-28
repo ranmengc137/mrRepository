@@ -1,5 +1,6 @@
 package com.tcc.demo.demo.mappers;
 
+import com.tcc.demo.demo.annotation.DS;
 import com.tcc.demo.demo.entities.Inventory;
 import org.springframework.stereotype.Repository;
 

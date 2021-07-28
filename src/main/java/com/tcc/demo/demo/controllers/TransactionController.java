@@ -1,12 +1,10 @@
 package com.tcc.demo.demo.controllers;
 
+import com.alibaba.fastjson.JSONObject;
+import com.tcc.demo.demo.modual.OrderContext;
 import com.tcc.demo.demo.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author lw
@@ -18,10 +16,11 @@ public class TransactionController {
     @Autowired
     private TransactionService service;
 
-    @GetMapping(value = "/commit")
-    public String commit() {
+    @PostMapping(value = "/commit")
+    public String commit(@RequestBody String param) {
         try {
-            service.buySuccess(new HashMap<>());
+            OrderContext orderContext = JSONObject.parseObject(param,OrderContext.class);
+            service.buy(orderContext);
             return "commit success";
         } catch (RuntimeException e) {
             return "commit failed";
