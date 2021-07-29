@@ -113,4 +113,30 @@
       trx_id = #{trxId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <insert id="freezeInventory">
+    insert into inventory_tcc (prod_name, inventory_free,
+    updateTime, `status`, trx_id
+    )
+    values (#{inventoryTcc.prodName,jdbcType=VARCHAR}, #{inventoryTcc.inventoryFree,jdbcType=INTEGER},
+    #{inventoryTcc.updatetime,jdbcType=TIMESTAMP}, #{inventoryTcc.status,jdbcType=CHAR}, #{inventoryTcc.trxId,jdbcType=VARCHAR}
+    )
+  </insert>
+
+
+  <update id="updateStatusToCommit">
+    update inventory_tcc set status = '2' where trx_id=#{trxId,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateStatusToCancel">
+    update inventory_tcc set status = '3' where trx_id=#{trxId,jdbcType=VARCHAR}
+  </update>
+
+  <update id="unFreeze" parameterType="java.lang.String">
+    update inventory set inventory_left=
+    (select sum(t.inv) from
+			(select inventory_left inv from inventory where prod_name='apple' union all
+				select inventory_free inv from inventory_tcc where trx_id = #{trxId,jdbcType=VARCHAR}) as t),updateTime=sysdate()
+    where prod_name='apple'
+  </update>
 </mapper>

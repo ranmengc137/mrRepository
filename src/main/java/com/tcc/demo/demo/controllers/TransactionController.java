@@ -16,7 +16,7 @@ public class TransactionController {
     @Autowired
     private TransactionService service;
 
-    @PostMapping(value = "/commit")
+    @PostMapping(value = "/buy")
     public String commit(@RequestBody String param) {
         try {
             OrderContext orderContext = JSONObject.parseObject(param,OrderContext.class);

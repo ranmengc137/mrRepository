@@ -24,17 +24,17 @@ public class TransactionService {
 
     @TccTransaction
     public void buy(OrderContext context) {
-        System.out.println("global transaction id:: " + RootContext.get());
+        log.info("global transaction id:: " + RootContext.get());
         if (!accountService.prepare(context)) {
-            System.out.println("accountService try failed");
+            log.info("accountService try failed");
             throw new RuntimeException("accountService prepare failed!");
         }
 
-        System.out.println("accountService try success");
+        log.info("accountService try success");
         if (!inventoryService.prepare(context)) {
-            System.out.println("inventoryService try failed");
+            log.info("inventoryService try failed");
             throw new RuntimeException("inventoryService prepare failed");
         }
-        System.out.println("inventoryService try success");
+        log.info("inventoryService try success");
     }
 }

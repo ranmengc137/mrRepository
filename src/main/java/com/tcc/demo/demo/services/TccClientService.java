@@ -67,19 +67,19 @@ public class TccClientService {
      */
     private boolean executeMethod(List<Map<String, Object>> branchTransactions, String methodName,String trxId) {
         for (Map<String, Object> item: branchTransactions) {
-            System.out.println("service info:: " + item.toString());
-            System.out.println("service method :: " + item.get(methodName).toString());
+            log.info("service info:: " + item.toString());
+            log.info("service method :: " + item.get(methodName).toString());
 
             try {
                 Class<?> clazz = Class.forName(item.get("class_name").toString());
-                System.out.println("Service Class::" + clazz.getName());
+                log.info("Service Class::" + clazz.getName());
 
                 Method method = clazz.getDeclaredMethod(item.get(methodName).toString(),String.class);
-                System.out.println("Service Method::" + method.toString());
+                log.info("Service Method::" + method.toString());
 
                 Object service = SpringBeanFactoryUtils.getBean(clazz);
                 Object ret = method.invoke(service,trxId);
-                System.out.println("execute method return: " + ret.toString());
+                log.info("execute method return: " + ret.toString());
             } catch (Exception e) {
                 e.printStackTrace();
                 return false;
@@ -96,7 +96,7 @@ public class TccClientService {
      * @param cancelMethodName cancel 方法名
      */
     public void register(String xid, String className, String commitMethodName, String cancelMethodName) {
-        System.out.println("Register xid::" + xid + " class name:: " + className + " commit method::" + commitMethodName +
+        log.info("Register xid::" + xid + " class name:: " + className + " commit method::" + commitMethodName +
                 " cancel method::" + cancelMethodName);
 
         TransactionInfo transactionInfo = new TransactionInfo();
@@ -110,6 +110,6 @@ public class TccClientService {
         Map<String, Object> condition = new HashMap<>(1);
         condition.put("xid", xid);
         List<Map<String, Object>> transactionInfos = transactionInfoMapper.query(condition);
-        System.out.println("insert to database:: " + transactionInfos.toString());
+        log.info("insert to database:: " + transactionInfos.toString());
     }
 }

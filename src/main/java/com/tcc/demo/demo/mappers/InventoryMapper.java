@@ -2,6 +2,7 @@ package com.tcc.demo.demo.mappers;
 
 import com.tcc.demo.demo.annotation.DS;
 import com.tcc.demo.demo.entities.Inventory;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -47,4 +48,6 @@ public interface InventoryMapper {
     * @return int int
     */
     int updateByPrimaryKey(Inventory record);
+
+    int deductInventory(@Param("prodName") String prodName, @Param("inventoryLeft") int inventoryLeft);
 }

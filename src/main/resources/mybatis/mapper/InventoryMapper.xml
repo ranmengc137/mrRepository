@@ -89,4 +89,12 @@
       updateTime = #{updatetime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+
+  <update id="deductInventory" >
+    update inventory
+    set inventory_left = #{inventoryLeft,jdbcType=INTEGER},
+    updateTime = sysdate()
+    where prod_name=#{prodName}
+  </update>
 </mapper>

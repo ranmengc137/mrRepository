@@ -2,6 +2,7 @@ package com.tcc.demo.demo.mappers;
 
 import com.tcc.demo.demo.annotation.DS;
 import com.tcc.demo.demo.entities.InventoryTcc;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -47,4 +48,12 @@ public interface InventoryTccMapper {
     * @return int int
     */
     int updateByPrimaryKey(InventoryTcc record);
+
+    int freezeInventory(@Param("inventoryTcc")InventoryTcc inventoryTcc);
+
+    int updateStatusToCommit(@Param("trxId") String trxId);
+
+    int updateStatusToCancel(@Param("trxId") String trxId);
+
+    int unFreeze(@Param("trxId") String trxId);
 }
