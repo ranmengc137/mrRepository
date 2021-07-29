@@ -25,8 +25,7 @@ public class InventoryService implements Service {
 
     @Autowired
     private InventoryTccMapper inventoryTccMapper;
-
-
+    
     @Override
     @TccAction(name = "prepare", confirmMethod = "commit", cancelMethod = "cancel")
     @DS("inventory")
